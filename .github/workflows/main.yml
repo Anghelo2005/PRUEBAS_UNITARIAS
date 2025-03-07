@@ -1,8 +1,10 @@
-name: Ruby on rails Tests
+name: Ruby on Rails Tests
+
 on: 
   push:
     branches:
       - main
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -21,11 +23,13 @@ jobs:
         gem install bundler
         bundle install --jobs 4 --retry 3
 
+    - name: Grant execution permissions to Rails scripts
+      run: chmod +x bin/rails
+
     - name: Set up database
       run: |
         bin/rails db:create
         bin/rails db:schema:load
 
     - name: Run tests
-      run: |
-        bin/rails test
+      run: bin/rails test
